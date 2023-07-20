@@ -78,13 +78,3 @@ export const createUserDocumentFromAuth = async (userInfoAuth) => {
     // return the user data  
     return userDocRef;
 };
-
-// Get a list of cities from your database
-
-// const getUsers = async (db) => {
-//     const userCollection = collection(db, "users");
-//     const userSnapsot = await getDocs(userCollection);
-//     const userlist = userSnapsot.docs.map((doc) => doc.data());
-
-//     //   return userList;
-// };
