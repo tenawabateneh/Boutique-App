@@ -38,10 +38,13 @@ googleProvider.setCustomParameters({
 export const auth = getAuth();
 
 // Just it returns the user information in JSON
+// sign-in with google popup via anonumyous function
 export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
+// sign-in with google redirect via anonumyous function
+export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
 
 
-export const db = getFirestore(firebaseApp);
+export const db = getFirestore();
 
 export const createUserDocumentFromAuth = async (userInfoAuth) => {
     // This is the actual instance of a model
