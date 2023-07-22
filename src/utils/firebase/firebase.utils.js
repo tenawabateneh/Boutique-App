@@ -11,9 +11,9 @@ import {
 // importing a buanch of firebase library
 import {
     getAuth,
-    signInWithRedirect,
     signInWithPopup,
-    GoogleAuthProvider
+    GoogleAuthProvider,
+    createUserWithEmailAndPassword
 } from 'firebase/auth'
 
 // Your web app's Firebase configuration
@@ -40,16 +40,15 @@ export const auth = getAuth();
 // Just it returns the user information in JSON
 // sign-in with google popup via anonumyous function
 export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
-// sign-in with google redirect via anonumyous function
-export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider);
 
 
 export const db = getFirestore();
 
-export const createUserDocumentFromAuth = async (userInfoAuth) => {
+export const createUserDocumentFromAuth = async (userInfoAuth, additionalInformation = {}) => {
+
+    if (!userInfoAuth) return;
     // This is the actual instance of a model
     const userDocRef = doc(db, 'users', userInfoAuth.uid);
-
     console.log(userDocRef);
 
     // What if thr user existed in the firebase database
@@ -70,6 +69,7 @@ export const createUserDocumentFromAuth = async (userInfoAuth) => {
                 email,
                 emailVerified,
                 createdDate,
+                ...additionalInformation,
             });
         } catch (error) {
             console.log('Error ON Creating A User: ', error.message);
@@ -80,4 +80,10 @@ export const createUserDocumentFromAuth = async (userInfoAuth) => {
 
     // return the user data  
     return userDocRef;
+};
+
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+    if (!email || !password) return;
+
+    return await createUserWithEmailAndPassword(auth, email, password);
 };
