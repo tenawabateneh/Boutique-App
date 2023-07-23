@@ -13,7 +13,8 @@ import {
     getAuth,
     signInWithPopup,
     GoogleAuthProvider,
-    createUserWithEmailAndPassword
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
 } from 'firebase/auth'
 
 // Your web app's Firebase configuration
@@ -77,13 +78,20 @@ export const createUserDocumentFromAuth = async (userInfoAuth, additionalInforma
     }
 
     // if user data  exist 
-
     // return the user data  
     return userDocRef;
 };
 
+// helper or utility function
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
     if (!email || !password) return;
 
     return await createUserWithEmailAndPassword(auth, email, password);
+};
+
+// helper or utility function
+export const signInAuthUserWithEmailAndPassword = async (email, password) => {
+    if (!email || !password) return;
+
+    return await signInWithEmailAndPassword(auth, email, password);
 };

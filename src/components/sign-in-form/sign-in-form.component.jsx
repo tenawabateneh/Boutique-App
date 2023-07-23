@@ -1,25 +1,27 @@
 import { useState } from "react";
 
 import {
-  createAuthUserWithEmailAndPassword,
+  signInWithGooglePopup,
   createUserDocumentFromAuth,
+  signInAuthUserWithEmailAndPassword,
 } from "../../utils/firebase/firebase.utils";
-
+import {
+  signInWithCustomToken,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import FormInput from "../form-input/form-input.component";
-import "./sign-up-form.styles.scss";
+import "./sign-in-form.styles.scss";
 import Button from "../button/button.component";
 
 // This pattern is to generise the handle change event of input fields
 const defaultFormFileds = {
-  displayName: "",
   email: "",
   password: "",
-  confirmPassword: "",
 };
 
-const SignUpForm = () => {
+const SignInForm = () => {
   const [formFields, setformFields] = useState(defaultFormFileds);
-  const { displayName, email, password, confirmPassword } = formFields;
+  const { email, password } = formFields;
   console.log(formFields);
 
   const formFieldChangeHandler = (event) => {
@@ -30,25 +32,38 @@ const SignUpForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (password != confirmPassword) {
-      alert("Passwords do not match");
-      return;
-    }
     // creating a user
     try {
-      const { user } = await createAuthUserWithEmailAndPassword(
+      const response = await signInAuthUserWithEmailAndPassword(
         email,
         password
       );
-
-      await createUserDocumentFromAuth(user, { displayName });
+      console.log(response);
       // clearout the form fields
       resetFormFields();
     } catch (error) {
-      if (error.code == "auth/email-already-in-use") {
-        alert("Can not Create USER, Email Already in-use");
-      } else alert("User Creation Encountered an Erorr: ", error);
+      switch (error.code) {
+        case "auth/user-not-found":
+          alert("User is not found with the inserted email and passwod.");
+          break;
+
+        case "auth/network-request-failed":
+          alert("You're offline, Please Check Your Network Connection.");
+          break;
+
+        case "auth/wrong-password":
+          alert("The Password is incorrect...");
+          break;
+
+        default:
+          alert("Sign-In Encountered an Erorr: ", error);
+      }
     }
+  };
+
+  const signInWithGoogle = async () => {
+    const { user } = await signInWithGooglePopup();
+    await createUserDocumentFromAuth(user);
   };
 
   const resetFormFields = () => {
@@ -57,18 +72,10 @@ const SignUpForm = () => {
 
   return (
     <div className="sign-up-container">
-      <h2>Don't have an account?</h2>
-      <span>Sign up with your email and password</span>
+      <h2>Already have an account?</h2>
+      <span>Sign in with your email and password</span>
 
       <form onSubmit={handleSubmit}>
-        <FormInput
-          label="Display Name"
-          type="text"
-          name="displayName"
-          value={displayName}
-          onChange={formFieldChangeHandler}
-          required
-        />
         <FormInput
           label="Email"
           type="email"
@@ -86,21 +93,18 @@ const SignUpForm = () => {
           onChange={formFieldChangeHandler}
           required
         />
-        <FormInput
-          label="Confirm Password"
-          type="password"
-          name="confirmPassword"
-          value={confirmPassword}
-          onChange={formFieldChangeHandler}
-          required
-        />
 
-        <Button type="submit" buttonType="inverted">
-          Sign Up
-        </Button>
+        <div className="buttons-container">
+          <Button type="submit" buttonType="inverted">
+            Sign In
+          </Button>
+          <Button type='button' onClick={signInWithGoogle} buttonType="google">
+            Google Sign In
+          </Button>
+        </div>
       </form>
     </div>
   );
 };
 
-export default SignUpForm;
+export default SignInForm;

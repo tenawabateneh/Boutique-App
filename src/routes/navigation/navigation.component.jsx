@@ -4,9 +4,13 @@ import { Link, Outlet } from "react-router-dom";
 import { ReactComponent as CrownLogo } from "../../assets/crown.svg";
 import "./navigation.styles.scss";
 
-const Contact = () =>{
-    return(<div><h1>Contact Page is here</h1></div>)
-}
+const Contact = () => {
+  return (
+    <div>
+      <h1>Contact Page is here</h1>
+    </div>
+  );
+};
 
 const Navigation = () => {
   return (
@@ -19,7 +23,7 @@ const Navigation = () => {
           <Link className="nav-link" to="/shop">
             SHOP
           </Link>
-          <Link className="nav-link" to="/sign-in">
+          <Link className="nav-link" to="/auth">
             Sign-In
           </Link>
         </div>
