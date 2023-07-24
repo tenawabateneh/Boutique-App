@@ -1,17 +1,16 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import {
   signInWithGooglePopup,
   createUserDocumentFromAuth,
   signInAuthUserWithEmailAndPassword,
 } from "../../utils/firebase/firebase.utils";
-import {
-  signInWithCustomToken,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+
 import FormInput from "../form-input/form-input.component";
 import "./sign-in-form.styles.scss";
 import Button from "../button/button.component";
+
+import { UserContext } from "../../contexts/user.context";
 
 // This pattern is to generise the handle change event of input fields
 const defaultFormFileds = {
@@ -22,6 +21,9 @@ const defaultFormFileds = {
 const SignInForm = () => {
   const [formFields, setformFields] = useState(defaultFormFileds);
   const { email, password } = formFields;
+
+  const { setCurrentUser } = useContext(UserContext);
+
   console.log(formFields);
 
   const formFieldChangeHandler = (event) => {
@@ -34,11 +36,15 @@ const SignInForm = () => {
 
     // creating a user
     try {
-      const response = await signInAuthUserWithEmailAndPassword(
+      const { user } = await signInAuthUserWithEmailAndPassword(
         email,
         password
       );
-      console.log(response);
+      // setUp the userContext
+      setCurrentUser(user);   
+
+
+      // console.log(user);
       // clearout the form fields
       resetFormFields();
     } catch (error) {
@@ -98,7 +104,7 @@ const SignInForm = () => {
           <Button type="submit" buttonType="inverted">
             Sign In
           </Button>
-          <Button type='button' onClick={signInWithGoogle} buttonType="google">
+          <Button type="button" onClick={signInWithGoogle} buttonType="google">
             Google Sign In
           </Button>
         </div>
