@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 
 import {
   createAuthUserWithEmailAndPassword,
@@ -8,7 +8,6 @@ import {
 import FormInput from "../form-input/form-input.component";
 import "./sign-up-form.styles.scss";
 import Button from "../button/button.component";
-import { UserContext } from "../../contexts/user.context";
 
 // This pattern is to generise the handle change event of input fields
 const defaultFormFileds = {
@@ -21,9 +20,7 @@ const defaultFormFileds = {
 const SignUpForm = () => {
   const [formFields, setformFields] = useState(defaultFormFileds);
   const { displayName, email, password, confirmPassword } = formFields;
-  console.log(formFields);
-
-  const { setCurrentUser } = useContext(UserContext);
+  // console.log(formFields);
 
   const formFieldChangeHandler = (event) => {
     const { name, value } = event.target;
@@ -43,7 +40,6 @@ const SignUpForm = () => {
         email,
         password
       );
-      setCurrentUser(user);
 
       await createUserDocumentFromAuth(user, { displayName });
       // clearout the form fields

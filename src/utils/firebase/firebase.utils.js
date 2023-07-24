@@ -16,6 +16,7 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
+    onAuthStateChanged
 } from 'firebase/auth'
 
 // Your web app's Firebase configuration
@@ -98,3 +99,8 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
 };
 
 export const signOutUser = async () => await signOut(auth);
+
+// Observer design pattern well apllaied here via 'onAuthStateChanged' method
+// the callback is called whenever the 'auth' state is changed, 'auth' means to the first argument
+// 'onAuthStateChanged' is just the listener
+export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback);
