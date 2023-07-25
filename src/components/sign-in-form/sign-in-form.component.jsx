@@ -52,13 +52,28 @@ const SignInForm = () => {
           break;
 
         default:
-          alert("Sign-In Encountered an Erorr: ", error);
+          alert("SignInWithEmailAndPassword Encountered an Erorr: ", error);
       }
     }
   };
 
   const signInWithGoogle = async () => {
-    await signInWithGooglePopup();
+    try {
+      await signInWithGooglePopup();
+    } catch (error) {
+      switch (error.code) {
+        case "auth/cancelled-popup-request":
+          alert("You're Popup request cancelled, You can retry it...");
+          break;
+
+        case "auth/popup-closed-by-user":
+          alert("You're Popup request closed by user, You can retry it...");
+          break;
+
+        default:
+          alert("SignInWithGooglePopup Encountered an Erorr: ", error);
+      }
+    }
   };
 
   const resetFormFields = () => {
