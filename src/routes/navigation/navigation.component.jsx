@@ -9,15 +9,8 @@ import { CartContext } from "../../contexts/cart.context";
 
 import { ReactComponent as CrownLogo } from "../../assets/crown.svg";
 import { signOutUser } from "../../utils/firebase/firebase.utils";
-import "./navigation.styles.scss";
 
-const Contact = () => {
-  return (
-    <div>
-      <h1>Contact Page is here</h1>
-    </div>
-  );
-};
+import "./navigation.styles.scss";
 
 const Navigation = () => {
   const { currentUser } = useContext(UserContext);
