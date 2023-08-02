@@ -2,13 +2,15 @@ import { useState } from "react";
 
 import {
   signInWithGooglePopup,
-  createUserDocumentFromAuth,
   signInAuthUserWithEmailAndPassword,
 } from "../../utils/firebase/firebase.utils";
 
 import FormInput from "../form-input/form-input.component";
-import "./sign-in-form.styles.scss";
-import Button from "../button/button.component";
+import Button, { BUTTON_TYPE_CLASS } from "../button/button.component";
+import {
+  STC_SignInContainer,
+  STC_ButtonsContainer,
+} from "./sign-in-form.styles";
 
 // This pattern is to generise the handle change event of input fields
 const defaultFormFileds = {
@@ -81,7 +83,7 @@ const SignInForm = () => {
   };
 
   return (
-    <div className="sign-up-container">
+    <STC_SignInContainer>
       <h2>Already have an account?</h2>
       <span>Sign in with your email and password</span>
 
@@ -104,16 +106,20 @@ const SignInForm = () => {
           required
         />
 
-        <div className="buttons-container">
+        <STC_ButtonsContainer>
           <Button type="submit" buttonType="inverted">
-            Sign In
+            Sign-In
           </Button>
-          <Button type="button" onClick={signInWithGoogle} buttonType="google">
-            Google Sign In
+          <Button
+            type="button"
+            onClick={signInWithGoogle}
+            buttonType={BUTTON_TYPE_CLASS.google}
+          >
+            Google Sign-In
           </Button>
-        </div>
+        </STC_ButtonsContainer>
       </form>
-    </div>
+    </STC_SignInContainer>
   );
 };
 

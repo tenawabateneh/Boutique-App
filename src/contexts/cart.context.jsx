@@ -3,11 +3,11 @@ import { createContext, useState, useEffect } from "react";
 // Helper function to add the product
 const addCartItem = (cartItems, productToAdd) => {
   // if the product existed in the cartBag
-  const existedCartItem = cartItems.find((item) => item.id == productToAdd.id);
+  const existedCartItem = cartItems.find((item) => item.id === productToAdd.id);
 
   if (existedCartItem) {
     return cartItems.map((cartItem) =>
-      cartItem.id == productToAdd.id
+      cartItem.id === productToAdd.id
         ? { ...cartItem, quantity: cartItem.quantity + 1 }
         : cartItem
     );
@@ -20,16 +20,16 @@ const addCartItem = (cartItems, productToAdd) => {
 const removeCartItem = (cartItems, productToRemove) => {
   // find the cartItem to remove
   const existedCartItem = cartItems.find(
-    (item) => item.id == productToRemove.id
+    (item) => item.id === productToRemove.id
   );
 
   //  check if quantity equal to 1, if it's remove that from the cart
-  if (existedCartItem.quantity == 1) {
+  if (existedCartItem.quantity === 1) {
     return cartItems.filter((cartItem) => cartItem.id != productToRemove.id);
   }
 
   return cartItems.map((cartItem) =>
-    cartItem.id == productToRemove.id
+    cartItem.id === productToRemove.id
       ? { ...cartItem, quantity: cartItem.quantity - 1 }
       : cartItem
   );

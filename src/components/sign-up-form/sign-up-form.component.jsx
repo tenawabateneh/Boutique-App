@@ -6,8 +6,9 @@ import {
 } from "../../utils/firebase/firebase.utils";
 
 import FormInput from "../form-input/form-input.component";
-import "./sign-up-form.styles.scss";
 import Button from "../button/button.component";
+
+import { STC_SignUpContainer } from "./sign-up-form.styles";
 
 // This pattern is to generise the handle change event of input fields
 const defaultFormFileds = {
@@ -30,7 +31,7 @@ const SignUpForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (password != confirmPassword) {
+    if (password !== confirmPassword) {
       alert("Passwords do not match");
       return;
     }
@@ -45,7 +46,7 @@ const SignUpForm = () => {
       // clearout the form fields
       resetFormFields();
     } catch (error) {
-      if (error.code == "auth/email-already-in-use") {
+      if (error.code === "auth/email-already-in-use") {
         alert("Can not Create USER, Email Already in-use");
       } else alert("User Creation Encountered an Erorr: ", error);
     }
@@ -56,7 +57,7 @@ const SignUpForm = () => {
   };
 
   return (
-    <div className="sign-up-container">
+    <STC_SignUpContainer>
       <h2>Don't have an account?</h2>
       <span>Sign up with your email and password</span>
 
@@ -96,10 +97,10 @@ const SignUpForm = () => {
         />
 
         <Button type="submit" buttonType="inverted">
-          Sign Up
+          Sign-Up
         </Button>
       </form>
-    </div>
+    </STC_SignUpContainer>
   );
 };
 
