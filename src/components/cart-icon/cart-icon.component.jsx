@@ -14,8 +14,10 @@ const CartIcon = () => {
 
   return (
     <STC_CartIconContainer onClick={toggleIsCartOpen}>
+
       <STC_ShoppingIcon />
       <STC_ItemCount> {cartCount} </STC_ItemCount>
+      
     </STC_CartIconContainer>
   );
 };
