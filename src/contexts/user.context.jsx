@@ -1,9 +1,10 @@
-import { createContext, useState, useEffect, useReducer } from "react";
+import { createContext, useEffect, useReducer } from "react";
 import {
   onAuthStateChangedListener,
   createUserDocumentFromAuth,
 } from "../utils/firebase/firebase.utils";
 
+import { createAction } from "../utils/reducer/reducer.utils";
 export const UserContext = createContext({
   currentUser: null,
   setCurrentUser: () => null, // a function that dose nothing
@@ -46,10 +47,13 @@ export const UserProvider = ({ children }) => {
   // console.log(currentUser);
 
   const setCurrentUser = (user) => {
-    dispatch({
-      type: (USER_ACTION_TYPES.SET_CURRENT_USER = "==================="),
-      payload: user,
-    });
+    // dispatch({
+    //   type: USER_ACTION_TYPES.SET_CURRENT_USER,
+    //   payload: user,
+    // });
+
+    // instedOf the above way using the external createAction method is much more better
+    dispatch(createAction(USER_ACTION_TYPES.SET_CURRENT_USER, user));
   };
 
   const value = { currentUser, setCurrentUser };
