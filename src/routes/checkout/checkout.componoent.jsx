@@ -34,7 +34,7 @@ const CheckOut = () => {
       {cartItems.map((item) => (
         <CheckoutItem key={item.id} cartItem={item} />
       ))}
-      <STC_TotalCost>Total: {cartTotalPrice} birr</STC_TotalCost>
+      <STC_TotalCost>Total: ${cartTotalPrice}</STC_TotalCost>
     </STC_CheckoutContainer>
   );
 };

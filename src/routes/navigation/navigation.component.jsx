@@ -23,20 +23,10 @@ const Navigation = () => {
 
   const navigate = useNavigate();
 
-  // Redirect to the homepage
-  // useEffect(() => {
-  //   navigate("/auth");
-  // }, [LoggedIn, loggedOut]);
-
-  let LoggedIn = false;
-
   useEffect(() => {
-    if (LoggedIn && currentUser) {
-      navigate("/home");
-    } else if (!LoggedIn) {
-      navigate("/auth");
-    }
-  }, [LoggedIn, currentUser]);
+    if (currentUser) navigate("/");
+    else navigate("/auth");
+  }, [currentUser]);
 
   return (
     <Fragment>
@@ -47,9 +37,8 @@ const Navigation = () => {
         <STC_NavLinks>
           <STC_NavLink to="/shop">SHOP</STC_NavLink>
           {currentUser ? (
-            <STC_NavLink to="/auth" as="span" onClick={signOutUser}>
+            <STC_NavLink as="span" onClick={signOutUser}>
               SIGN-OUT
-              {(LoggedIn = true)}
             </STC_NavLink>
           ) : (
             <STC_NavLink to="/auth">
