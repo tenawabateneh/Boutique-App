@@ -25,10 +25,10 @@ const Navigation = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (currentUser) navigate("/");
-    else navigate("/auth");
-  }, [currentUser]);
+  // useEffect(() => {
+  //   if (currentUser) navigate("/");
+  //   else navigate("/auth");
+  // }, [currentUser]);
 
   return (
     <Fragment>
