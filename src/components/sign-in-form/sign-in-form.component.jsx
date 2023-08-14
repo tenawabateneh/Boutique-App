@@ -11,6 +11,8 @@ import {
   STC_SignInContainer,
   STC_ButtonsContainer,
 } from "./sign-in-form.styles";
+import { setCurrentUser } from "../../store/user/user.action";
+import { useNavigate } from "react-router-dom";
 
 // This pattern is to generise the handle change event of input fields
 const defaultFormFileds = {
@@ -37,6 +39,8 @@ const SignInForm = () => {
         email,
         password
       );
+      console.log("USER_WITH_EMAIL-SIGN_IN ", user);
+
       // clearout the form fields
       resetFormFields();
     } catch (error) {
@@ -61,7 +65,8 @@ const SignInForm = () => {
 
   const signInWithGoogle = async () => {
     try {
-      await signInWithGooglePopup();
+      const googleUser = await signInWithGooglePopup();
+      if (googleUser) console.log("USER_WITH_GOOGLE-SIGN_IN ", googleUser);
     } catch (error) {
       switch (error.code) {
         case "auth/cancelled-popup-request":
@@ -107,7 +112,7 @@ const SignInForm = () => {
         />
 
         <STC_ButtonsContainer>
-          <Button type="submit" buttonType="inverted">
+          <Button type="submit" buttonType="inverted" onClick={handleSubmit}>
             Sign-In
           </Button>
           <Button

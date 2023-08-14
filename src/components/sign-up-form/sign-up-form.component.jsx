@@ -96,7 +96,7 @@ const SignUpForm = () => {
           required
         />
 
-        <Button type="submit" buttonType="inverted">
+        <Button type="submit" buttonType="inverted" onClick={handleSubmit}>
           Sign-Up
         </Button>
       </form>

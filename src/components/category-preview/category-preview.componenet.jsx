@@ -11,9 +11,7 @@ const CategoryPreview = ({ title, products }) => {
   return (
     <STC_CategoryPreviewContainer>
       <h2>
-        <STC_Title to={title}>
-          {title.toUpperCase()}
-        </STC_Title>
+        <STC_Title to={title}>{title.toUpperCase()}</STC_Title>
       </h2>
       <STC_Preview>
         {products

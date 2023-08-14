@@ -75,13 +75,7 @@ export const getCatagoriesAndDocuments = async () => {
     const q = query(collectionRef);
 
     const querySnapshot = await getDocs(q);
-    const categoryMap = querySnapshot.docs.reduce((accumulator, docSnapshot) => {
-        const { title, items } = docSnapshot.data();
-        accumulator[title.toLowerCase()] = items;
-        return accumulator;
-    }, {})
-
-    return categoryMap;
+    return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
 }
 
 export const createUserDocumentFromAuth = async (userInfoAuth, additionalInformation = {}) => {
