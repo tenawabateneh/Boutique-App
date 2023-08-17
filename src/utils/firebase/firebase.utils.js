@@ -112,7 +112,7 @@ export const createUserDocumentFromAuth = async (userInfoAuth, additionalInforma
 
     // if user data  exist 
     // return the user data  
-    return userDocRef;
+    return userSnaphot;
 };
 
 // helper or utility function
@@ -135,3 +135,15 @@ export const signOutUser = async () => await signOut(auth);
 // the callback is called whenever the 'auth' state is changed, 'auth' means to the first argument
 // 'onAuthStateChanged' is just the listener
 export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback);
+
+export const getCurrentUser = () => {
+    return new Promise((resolve, reject) => {
+        const unsubscribe = onAuthStateChanged(auth,
+            (userAuth) => {
+                unsubscribe();
+                resolve(userAuth)
+            },
+            reject
+        )
+    })
+}

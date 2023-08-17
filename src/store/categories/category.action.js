@@ -1,7 +1,6 @@
 
 import { CATEGORIES_ACTION_TYPES } from "./category.types";
 import { createAction } from "../../utils/reducer/reducer.utils";
-import { getCatagoriesAndDocuments } from "../../utils/firebase/firebase.utils";
 
 // export const setCategories = (categoriesArray) =>
 //     createAction(CATEGORIES_ACTION_TYPES.SET_CATEGORIES, categoriesArray);
@@ -20,15 +19,15 @@ export const fetchCategoriesFailed = (error) =>
     createAction(
         CATEGORIES_ACTION_TYPES.FETCH_CATEGORIES_FAILED, error);
 
-//  Now I need to know create thunk action that trigger coresspondingly the above 3 correct action
-export const thunkFetchCategoriesAsync = () => async (dispatch) => {
-    dispatch(fetchCategoriesStart());
+// //  Now I need to know create thunk action that trigger coresspondingly the above 3 correct action
+// export const thunkFetchCategoriesAsync = () => async (dispatch) => {
+//     dispatch(fetchCategoriesStart());
 
-    try {
-        const categoriesArray = await getCatagoriesAndDocuments();
-        dispatch(fetchCategoriesSuccess(categoriesArray))
-    } catch (error) {
-        dispatch(fetchCategoriesFailed(error))
-    }
-}
+//     try {
+//         const categoriesArray = await getCatagoriesAndDocuments();
+//         dispatch(fetchCategoriesSuccess(categoriesArray))
+//     } catch (error) {
+//         dispatch(fetchCategoriesFailed(error))
+//     }
+// }
 

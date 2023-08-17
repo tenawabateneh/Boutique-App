@@ -13,8 +13,8 @@ const DirectoryItem = ({ category }) => {
   const navigationHandler = () => navigate(route);
 
   return (
-    <STC_DirectoryItemContainer  onClick={navigationHandler}>
-      <STC_BackgroundImage imageUrl={imageURL} />
+    <STC_DirectoryItemContainer onClick={navigationHandler}>
+      <STC_BackgroundImage imageurl={imageURL} />
       <STC_Body>
         <h2>{title}</h2>
         <p>Shop Now</p>

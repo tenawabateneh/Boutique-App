@@ -1,14 +1,11 @@
 import { useState } from "react";
-
-import {
-  createAuthUserWithEmailAndPassword,
-  createUserDocumentFromAuth,
-} from "../../utils/firebase/firebase.utils";
+import { useDispatch } from "react-redux";
 
 import FormInput from "../form-input/form-input.component";
 import Button from "../button/button.component";
 
 import { STC_SignUpContainer } from "./sign-up-form.styles";
+import { signUpStart } from "../../store/user/user.action";
 
 // This pattern is to generise the handle change event of input fields
 const defaultFormFileds = {
@@ -19,6 +16,7 @@ const defaultFormFileds = {
 };
 
 const SignUpForm = () => {
+  const dispatch = useDispatch();
   const [formFields, setformFields] = useState(defaultFormFileds);
   const { displayName, email, password, confirmPassword } = formFields;
   // console.log(formFields);
@@ -35,14 +33,10 @@ const SignUpForm = () => {
       alert("Passwords do not match");
       return;
     }
+    
     // creating a user
     try {
-      const { user } = await createAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
-
-      await createUserDocumentFromAuth(user, { displayName });
+      dispatch(signUpStart(email, password, displayName));
       // clearout the form fields
       resetFormFields();
     } catch (error) {

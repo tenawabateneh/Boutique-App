@@ -17,7 +17,7 @@ const CategoryPreview = ({ title, products }) => {
         {products
           .filter((_, index) => index < 4)
           .map((product) => (
-            <ProductCard key={product.index} product={product} />
+            <ProductCard key={product.id} product={product} />
           ))}
       </STC_Preview>
     </STC_CategoryPreviewContainer>

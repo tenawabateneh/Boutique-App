@@ -1,14 +1,11 @@
-import { Fragment, useContext, useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDroDown from "../../components/cart-dropdown/cart-dropdown.component";
 
-import { selectIsCartOpen } from "../../store/cart/cart.selector";
-
 import { ReactComponent as CrownLogo } from "../../assets/crown.svg";
-import { signOutUser } from "../../utils/firebase/firebase.utils";
 
 import {
   STC_NavigationContainer,
@@ -16,19 +13,23 @@ import {
   STC_NavLinks,
   STC_NavLink,
 } from "./navigation.styles";
+import { selectIsCartOpen } from "../../store/cart/cart.selector";
 import { selectCurrentUser } from "../../store/user/user.selector";
+import { signOutStart } from "../../store/user/user.action";
 
 const Navigation = () => {
+  const dispatch = useDispatch();
+
   // select values and put them(data) to your component from your redux
   const currentUser = useSelector(selectCurrentUser);
   const isCartOpen = useSelector(selectIsCartOpen);
-
   const navigate = useNavigate();
+  const signOutUser = () => dispatch(signOutStart());
 
-  // useEffect(() => {
-  //   if (currentUser) navigate("/");
-  //   else navigate("/auth");
-  // }, [currentUser]);
+  useEffect(() => {
+    if (currentUser) navigate("/");
+    else navigate("/auth");
+  }, [currentUser]);
 
   return (
     <Fragment>
@@ -43,10 +44,7 @@ const Navigation = () => {
               SIGN-OUT
             </STC_NavLink>
           ) : (
-            <STC_NavLink to="/auth">
-              SIGN-IN
-              {/* {setLoggedIn(false)} */}
-            </STC_NavLink>
+            <STC_NavLink to="/auth">SIGN-IN</STC_NavLink>
           )}
           <CartIcon />
         </STC_NavLinks>

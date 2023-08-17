@@ -1,9 +1,5 @@
 import { useState } from "react";
-
-import {
-  signInWithGooglePopup,
-  signInAuthUserWithEmailAndPassword,
-} from "../../utils/firebase/firebase.utils";
+import { useDispatch } from "react-redux";
 
 import FormInput from "../form-input/form-input.component";
 import Button, { BUTTON_TYPE_CLASS } from "../button/button.component";
@@ -11,8 +7,10 @@ import {
   STC_SignInContainer,
   STC_ButtonsContainer,
 } from "./sign-in-form.styles";
-import { setCurrentUser } from "../../store/user/user.action";
-import { useNavigate } from "react-router-dom";
+import {
+  emailSignInStart,
+  googleSignInStart,
+} from "../../store/user/user.action";
 
 // This pattern is to generise the handle change event of input fields
 const defaultFormFileds = {
@@ -21,6 +19,7 @@ const defaultFormFileds = {
 };
 
 const SignInForm = () => {
+  const dispatch = useDispatch();
   const [formFields, setformFields] = useState(defaultFormFileds);
   const { email, password } = formFields;
 
@@ -31,15 +30,15 @@ const SignInForm = () => {
     setformFields({ ...formFields, [name]: value });
   };
 
-  const handleSubmit = async (event) => {
+  const signInWithEmailPassword = async (event) => {
     event.preventDefault();
+
+    dispatch(emailSignInStart());
+
     // creating a user
     try {
-      const { user } = await signInAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
-      console.log("USER_WITH_EMAIL-SIGN_IN ", user);
+      dispatch(emailSignInStart(email, password));
+      // console.log("USER_WITH_EMAIL-SIGN_IN ", user);
 
       // clearout the form fields
       resetFormFields();
@@ -64,23 +63,9 @@ const SignInForm = () => {
   };
 
   const signInWithGoogle = async () => {
-    try {
-      const googleUser = await signInWithGooglePopup();
-      if (googleUser) console.log("USER_WITH_GOOGLE-SIGN_IN ", googleUser);
-    } catch (error) {
-      switch (error.code) {
-        case "auth/cancelled-popup-request":
-          alert("You're Popup request cancelled, You can retry it...");
-          break;
+    dispatch(googleSignInStart());
 
-        case "auth/popup-closed-by-user":
-          alert("You're Popup request closed by user, You can retry it...");
-          break;
-
-        default:
-          alert("SignInWithGooglePopup Encountered an Erorr: ", error);
-      }
-    }
+    // console.log("USER_WITH_GOOGLE_POPUP-SIGN_IN ", user);
   };
 
   const resetFormFields = () => {
@@ -92,7 +77,7 @@ const SignInForm = () => {
       <h2>Already have an account?</h2>
       <span>Sign in with your email and password</span>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={signInWithEmailPassword}>
         <FormInput
           label="Email"
           type="email"
@@ -112,7 +97,11 @@ const SignInForm = () => {
         />
 
         <STC_ButtonsContainer>
-          <Button type="submit" buttonType="inverted" onClick={handleSubmit}>
+          <Button
+            type="submit"
+            buttonType="inverted"
+            onClick={signInWithEmailPassword}
+          >
             Sign-In
           </Button>
           <Button
