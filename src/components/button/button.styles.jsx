@@ -1,5 +1,10 @@
 import { styled } from "styled-components";
 
+import {
+  STC_SpinnerContainer,
+  STC_SpinnerOverlay,
+} from "../spinner/spinner.styles";
+
 export const STC_BaseButton = styled.div`
   min-width: 165px;
   width: auto;
@@ -17,6 +22,7 @@ export const STC_BaseButton = styled.div`
   cursor: pointer;
   display: flex;
   justify-content: center;
+  align-items: center;
 
   &:hover {
     background-color: white;
@@ -44,4 +50,9 @@ export const STC_InvertedButton = styled(STC_BaseButton)`
     color: white;
     border: none;
   }
+`;
+
+export const STC_ButtonSpinner = styled(STC_SpinnerContainer)`
+  width: 30px;
+  height: 30px;
 `;

@@ -2,6 +2,7 @@ import {
   STC_BaseButton,
   STC_GoogleSignInButton,
   STC_InvertedButton,
+  STC_ButtonSpinner,
 } from "./button.styles";
 
 export const BUTTON_TYPE_CLASS = {
@@ -17,8 +18,12 @@ const getButton = (buttonType = BUTTON_TYPE_CLASS.base) =>
     [BUTTON_TYPE_CLASS.inverted]: STC_InvertedButton,
   }[buttonType]);
 
-const Button = ({ children, buttonType, ...otherProps }) => {
+const Button = ({ children, buttonType, isLoading, ...otherProps }) => {
   const CustomButton = getButton(buttonType);
-  return <CustomButton {...otherProps}>{children}</CustomButton>;
+  return (
+    <CustomButton disabled={isLoading} {...otherProps}>
+      {isLoading ? <STC_ButtonSpinner /> : children}
+    </CustomButton>
+  );
 };
 export default Button;
